@@ -5,12 +5,10 @@ import com.back.domain.post.postComment.entity.PostComment
 import com.back.global.exception.ServiceException
 import com.back.global.jpa.entity.BaseEntity
 import jakarta.persistence.*
-import lombok.AllArgsConstructor
-import lombok.Getter
-import lombok.NoArgsConstructor
+import java.util.Optional
 
 @Entity
-class Post: BaseEntity() {
+class Post: BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     lateinit var author: Member
 
@@ -26,7 +24,8 @@ class Post: BaseEntity() {
         cascade = [CascadeType.PERSIST, CascadeType.REMOVE],
         orphanRemoval = true
     )
-    private val comments: MutableList<PostComment> = ArrayList<PostComment>()
+
+    val comments: MutableList<PostComment> = ArrayList<PostComment>()
 
     constructor(author: Member, title: String, content: String) {
         this.author = author
@@ -46,8 +45,11 @@ class Post: BaseEntity() {
         return postComment
     }
 
-    fun findCommentById(id: Int): PostComment? {
-        return comments.find { comment -> comment.id == id }
+    fun findCommentById(id: Int): Optional<PostComment> {
+        return comments
+            .stream()
+            .filter({ comment -> comment.id === id })
+            .findFirst()
     }
 
     fun deleteComment(postComment: PostComment): Boolean {
