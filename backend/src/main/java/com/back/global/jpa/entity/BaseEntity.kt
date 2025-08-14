@@ -16,7 +16,7 @@ abstract class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.PROTECTED)
-    private val id = 0
+    val id = 0
 
     @CreatedDate
     private val createDate: LocalDateTime? = null
