@@ -12,7 +12,7 @@ import java.util.*
 @Entity
 class Member : BaseEntity {
     @Column(unique = true)
-    private var username: String
+    var username: String
 
     lateinit var password: String
 
@@ -53,7 +53,7 @@ class Member : BaseEntity {
             .map { SimpleGrantedAuthority(it) }
             .toList()
 
-    private val authoritiesAsStringList: List<String>
+    val authoritiesAsStringList: List<String>
         get() {
             val authorities: MutableList<String> = ArrayList<String>()
 
