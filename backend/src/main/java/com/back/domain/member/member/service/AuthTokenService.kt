@@ -29,8 +29,9 @@ class AuthTokenService (
         )
     }
 
-    fun payload(accessToken: String): Map<String, Any?>? {
-        val parsedPayload = Ut.jwt.payload(jwtSecretKey, accessToken) ?: return null
+    fun payload(accessToken: String): Map<String, Any> {
+        val parsedPayload = Ut.jwt.payload(jwtSecretKey, accessToken) 
+            ?: throw RuntimeException("Invalid JWT token")
 
         val id = parsedPayload.get("id") as Int
         val username = parsedPayload.get("username") as String
@@ -42,6 +43,6 @@ class AuthTokenService (
             "username" to username,
             "nickname" to nickname,
             "authorities" to authorities
-        ) as Map<String, Any?>?
+        ) as Map<String, Any>
     }
 }

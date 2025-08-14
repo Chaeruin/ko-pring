@@ -53,9 +53,9 @@ class MemberService (
         return authTokenService.genAccessToken(member)
     }
 
-//    fun payload(accessToken: String): Map<String, Any?>? {
-//        return authTokenService.payload(accessToken)
-//    }
+    fun  payload(accessToken: String): Map<String, Object> {
+        return authTokenService.payload(accessToken) as Map<String, Object>;
+    }
 
     fun findById(id: Int): Optional<Member> {
         return memberRepository.findById(id)

@@ -3,24 +3,18 @@ package com.back.global.rsData
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonInclude
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-data class RsData<T> (
+@JvmRecord
+data class RsData<T>(
     val resultCode: String,
+    @field:JsonIgnore val statusCode: Int,
     val msg: String,
-    val data: T?
+    val data: T
 ) {
-    companion object {
-        val OK = RsData("200-1", "OK", "")
-    }
-
-    @JsonIgnore
-    fun getStatusCode(): Int = resultCode.split("-")[0].toInt()
-
-    @JsonIgnore
-    val isSuccess = getStatusCode() < 400
-
-    @JsonIgnore
-    val isFail = !isSuccess
-
-    fun <U> newDataOf(data: U): RsData<U> = RsData(resultCode, msg, data)
+    @JvmOverloads
+    constructor(resultCode: String, msg: String, data: T = null as T) : this(
+        resultCode,
+        resultCode.split("-", limit = 2)[0].toInt(),
+        msg,
+        data
+    )
 }

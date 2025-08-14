@@ -74,7 +74,7 @@ class Ut {
         lateinit var objectMapper: ObjectMapper
 
         @JvmOverloads
-        fun toString(`object`: Any, defaultValue: String): String {
+        fun toString(`object`: Any, defaultValue: String = ""): String {
             try {
                 return objectMapper.writeValueAsString(`object`)
             } catch (e: Exception) {

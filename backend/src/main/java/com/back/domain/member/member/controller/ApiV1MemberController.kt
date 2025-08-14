@@ -41,12 +41,13 @@ class ApiV1MemberController (
         val member = memberService.join(
             reqBody.username,
             reqBody.password,
-            reqBody.nickname
+            reqBody.nickname,
+            ""
         )
 
         return RsData<MemberDto>(
             "201-1",
-            "${member.getName()}님 환영합니다. 회원가입이 완료되었습니다.",
+            "${member.name}님 환영합니다. 회원가입이 완료되었습니다.",
             MemberDto(member)
         )
     }
@@ -83,15 +84,15 @@ class ApiV1MemberController (
 
         val accessToken = memberService.genAccessToken(member)
 
-        rq.setCookie("apiKey", member.getApiKey())
+        rq.setCookie("apiKey", member.apiKey)
         rq.setCookie("accessToken", accessToken)
 
         return RsData<MemberLoginResBody>(
             "200-1",
-            "${member.getName()}님 환영합니다.",
+            "${member.name}님 환영합니다.",
             MemberLoginResBody(
                 MemberDto(member),
-                member.getApiKey(),
+                member.apiKey,
                 accessToken
             )
         )
@@ -115,7 +116,7 @@ class ApiV1MemberController (
     @Transactional(readOnly = true)
     @Operation(summary = "내 정보")
     fun me(): MemberWithUsernameDto {
-        val actor = rq.getActorFromDb()
+        val actor = rq.actorFromDb
 
         return MemberWithUsernameDto(actor)
     }
