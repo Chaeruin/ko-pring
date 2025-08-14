@@ -5,9 +5,9 @@ import com.back.domain.post.postComment.entity.PostComment
 import com.back.global.exception.ServiceException
 import com.back.global.jpa.entity.BaseEntity
 import jakarta.persistence.*
+import lombok.AllArgsConstructor
 import lombok.Getter
 import lombok.NoArgsConstructor
-import java.util.*
 
 @Entity
 class Post: BaseEntity() {
@@ -28,6 +28,12 @@ class Post: BaseEntity() {
     )
     private val comments: MutableList<PostComment> = ArrayList<PostComment>()
 
+    constructor(author: Member, title: String, content: String) {
+        this.author = author
+        this.title = title
+        this.content = content
+    }
+
     fun modify(title: String, content: String) {
         this.title = title
         this.content = content
@@ -40,11 +46,8 @@ class Post: BaseEntity() {
         return postComment
     }
 
-    fun findCommentById(id: Int): Optional<PostComment?> {
-        return comments
-            .stream()
-            .filter { comment: PostComment -> comment.id == id }
-            .findFirst()
+    fun findCommentById(id: Int): PostComment? {
+        return comments.find { comment -> comment.id == id }
     }
 
     fun deleteComment(postComment: PostComment): Boolean {
