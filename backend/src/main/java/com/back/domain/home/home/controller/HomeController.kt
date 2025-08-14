@@ -35,11 +35,11 @@ class HomeController {
     @GetMapping("/session")
     @Operation(summary = "세션 확인")
     fun session(session: HttpSession): Map<String?, Any?> {
-        return Collections.list<String?>(session.getAttributeNames()).stream()
+        return Collections.list<String>(session.getAttributeNames()).stream()
             .collect(
                 Collectors.toMap(
-                    Function { name: String? -> name },
-                    Function { name: String? -> session.getAttribute(name) }
+                    Function { name: String -> name },
+                    Function { name: String -> session.getAttribute(name) }
                 ))
     }
 }
