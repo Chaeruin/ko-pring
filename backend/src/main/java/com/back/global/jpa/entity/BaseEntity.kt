@@ -12,17 +12,17 @@ import java.util.*
 
 @MappedSuperclass // 엔티티의 부모 클래스에는 이걸 달아야 한다.
 @EntityListeners(AuditingEntityListener::class)
-abstract class BaseEntity {
+abstract class BaseEntity (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.PROTECTED)
-    val id = 0
-
+    val id: Int = 0
+) {
     @CreatedDate
-    private val createDate: LocalDateTime? = null
+    lateinit var createDate: LocalDateTime
 
     @LastModifiedDate
-    private val modifyDate: LocalDateTime? = null
+    lateinit var modifyDate: LocalDateTime
 
     override fun equals(o: Any?): Boolean {
         if (o === this) return true

@@ -34,7 +34,6 @@ class MemberService (
             username,
             if (password.isNotBlank()) passwordEncoder.encode(password) else "",
             nickname,
-            UUID.randomUUID().toString(),
             profileImgUrl
         )
 

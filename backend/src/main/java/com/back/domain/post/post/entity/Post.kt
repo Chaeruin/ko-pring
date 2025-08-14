@@ -24,7 +24,6 @@ class Post: BaseEntity {
         cascade = [CascadeType.PERSIST, CascadeType.REMOVE],
         orphanRemoval = true
     )
-
     val comments: MutableList<PostComment> = ArrayList<PostComment>()
 
     constructor(author: Member, title: String, content: String) {
@@ -57,10 +56,10 @@ class Post: BaseEntity {
     }
 
     fun checkActorCanModify(actor: Member) {
-        if (author != actor) throw ServiceException("403-1", "${getId()}번 글 수정권한이 없습니다.")
+        if (author != actor) throw ServiceException("403-1", "${id}번 글 수정권한이 없습니다.")
     }
 
     fun checkActorCanDelete(actor: Member) {
-        if (author != actor) throw ServiceException("403-2", "${getId()}번 글 삭제권한이 없습니다.")
+        if (author != actor) throw ServiceException("403-2", "${id}번 글 삭제권한이 없습니다.")
     }
 }

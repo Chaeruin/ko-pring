@@ -43,7 +43,7 @@ class ApiV1PostController (
     @Transactional(readOnly = true)
     @Operation(summary = "단건 조회")
     fun getItem(@PathVariable id: Int): PostWithContentDto {
-        val post = postService.findById(id).get()
+        val post = postService.findById(id)
 
         return PostWithContentDto(post)
     }
@@ -54,9 +54,9 @@ class ApiV1PostController (
     fun delete(
         @PathVariable id: Int
     ): RsData<Void> {
-        val actor = rq.getActor()
+        val actor = rq.actor
 
-        val post = postService.findById(id).get()
+        val post = postService.findById(id)
 
         post.checkActorCanDelete(actor)
 
@@ -79,13 +79,13 @@ class ApiV1PostController (
     fun write(
         @RequestBody reqBody: @Valid PostWriteReqBody
     ): RsData<PostDto> {
-        val actor = rq.getActor()
+        val actor = rq.actor
 
         val post = postService.write(actor, reqBody.title, reqBody.content)
 
         return RsData<PostDto>(
             "201-1",
-            "${post.getId()}번 글이 작성되었습니다.",
+            "${post.id}번 글이 작성되었습니다.",
             PostDto(post)
         )
     }
@@ -102,9 +102,9 @@ class ApiV1PostController (
         @PathVariable id: Int,
         @RequestBody reqBody: @Valid PostModifyReqBody
     ): RsData<Void> {
-        val actor = rq.getActor()
+        val actor = rq.actor
 
-        val post = postService.findById(id).get()
+        val post = postService.findById(id)
 
         post.checkActorCanModify(actor)
 
@@ -112,7 +112,7 @@ class ApiV1PostController (
 
         return RsData<Void>(
             "200-1",
-            "${post.getId()}번 글이 수정되었습니다."
+            "${post.id}번 글이 수정되었습니다."
         )
     }
 }

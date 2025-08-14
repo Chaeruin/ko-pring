@@ -61,7 +61,7 @@ class ApiV1PostCommentController (
         @PathVariable postId: Int,
         @PathVariable id: Int
     ): RsData<Void> {
-        val actor = rq.getActor()
+        val actor = rq.actor
 
         val post: Post = postService.findById(postId)
 
@@ -128,7 +128,7 @@ class ApiV1PostCommentController (
 
         return RsData<PostCommentDto?>(
             "201-1",
-            "${postComment.getId()}번 댓글이 작성되었습니다.",
+            "${postComment.id}번 댓글이 작성되었습니다.",
             PostCommentDto(postComment)
         )
     }

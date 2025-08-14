@@ -1,7 +1,6 @@
 package com.back.global.security
 
 import com.back.domain.member.member.service.MemberService
-import lombok.RequiredArgsConstructor
 import lombok.extern.slf4j.Slf4j
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest

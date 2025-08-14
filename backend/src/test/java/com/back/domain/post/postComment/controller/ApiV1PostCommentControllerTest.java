@@ -50,7 +50,7 @@ public class ApiV1PostCommentControllerTest {
                 )
                 .andDo(print());
 
-        Post post = postService.findById(postId).get();
+        Post post = postService.findById(postId);
         PostComment postComment = post.findCommentById(id).get();
 
         resultActions
@@ -77,7 +77,7 @@ public class ApiV1PostCommentControllerTest {
                 )
                 .andDo(print());
 
-        Post post = postService.findById(postId).get();
+        Post post = postService.findById(postId);
         List<PostComment> comments = post.getComments();
 
         resultActions
@@ -222,7 +222,7 @@ public class ApiV1PostCommentControllerTest {
                 )
                 .andDo(print());
 
-        Post post = postService.findById(postId).get();
+        Post post = postService.findById(postId);
 
         PostComment postComment = post.getComments().getLast();
 

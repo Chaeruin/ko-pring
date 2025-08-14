@@ -12,6 +12,7 @@ import java.util.*
 
 class Ut {
     object jwt {
+        @JvmStatic
         fun toString(secret: String, expireSeconds: Long, body: MutableMap<String, Any>): String {
             val claimsBuilder = Jwts.claims()
 
